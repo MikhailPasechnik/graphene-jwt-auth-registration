@@ -9,17 +9,23 @@ Tests for `graphene-jwt-auth` models module.
 """
 
 from django.test import TestCase
+from django.contrib.auth import get_user_model
 
-from gjwt_auth import models
-
+User = get_user_model()
 
 class TestGjwt_auth(TestCase):
 
     def setUp(self):
-        pass
+	    self.user = User(email="eins@zwei.de")
+	    user.set_password('123')
+	    user.save()
 
-    def test_something(self):
-        pass
+    def test_token_valid(self):        
+	    serializer = JSONWebTokenSerializer(
+	        data={'email': user.email, 'password': '123'})
+	    serializer.is_valid()
+	    token = serializer.object['token']
+	    return "JWT %s" % token
 
     def tearDown(self):
-        pass
+	    self.user.delete()
