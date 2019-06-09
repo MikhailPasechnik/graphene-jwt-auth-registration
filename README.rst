@@ -146,10 +146,10 @@ Add Graphene JWT Auth's URL patterns:
         ...
     ]
 
-Features
---------
+.. Features
+   --------
 
-* TODO
+   * TODO
 
 Running Tests
 -------------
