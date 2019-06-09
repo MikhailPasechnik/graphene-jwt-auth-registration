@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-if AUTH_USER_MODEL=="gjwt_auth.User":
+if settings.AUTH_USER_MODEL=="gjwt_auth.User":
 
     class User(AbstractUser):
         USERNAME_FIELD = 'email'
