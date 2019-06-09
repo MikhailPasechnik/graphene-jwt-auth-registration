@@ -44,11 +44,15 @@ Add it to your `INSTALLED_APPS`:
         "gjwt_auth",
     ]
 
-Set AUTH_USER_MODEL to:
+Set AUTH_USER_MODEL:
+
+.. code-block:: python
 
     AUTH_USER_MODEL = "gjwt_auth.User"
 
 Add the JWTAuthenticationMiddleware:
+
+.. code-block:: python
 
     MIDDLEWARE = [
         ...
@@ -57,6 +61,8 @@ Add the JWTAuthenticationMiddleware:
     ]
 
 Create graphene schema in `yourproject/schema.py`: 
+
+.. code-block:: python
 
     import graphene
 
@@ -68,7 +74,7 @@ Create graphene schema in `yourproject/schema.py`:
         Register,
         ResetPassword,
         ResetPasswordConfirm,
-        )
+    )
 
     from gjwt_auth.schema import User, Viewer
 
@@ -94,15 +100,17 @@ Create graphene schema in `yourproject/schema.py`:
 
     schema = graphene.Schema(query=RootQuery, mutation=Mutation)
 
-
-
 Set the graphene schema:
+
+.. code-block:: python
 
     GRAPHENE = {
         'SCHEMA': 'yourproject.schema.schema'
     }
 
 Set djoser setttings:
+
+.. code-block:: python
 
     DJOSER = {
         'DOMAIN': os.environ.get('DJANGO_DJOSER_DOMAIN', 'localhost:3000'),
@@ -113,6 +121,8 @@ Set djoser setttings:
     }
 
 Set jwt auth settings:
+
+.. code-block:: python
 
     JWT_AUTH = {
         'JWT_ALLOW_REFRESH': True,
