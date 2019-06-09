@@ -1,3 +1,6 @@
+
+
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
@@ -29,15 +32,16 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+if AUTH_USER_MODEL=="gjwt_auth.User":
 
-class User(AbstractUser):
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    class User(AbstractUser):
+        USERNAME_FIELD = 'email'
+        REQUIRED_FIELDS = []
 
-    objects = UserManager()
+        objects = UserManager()
 
-    def __str__(self):
-        return self.email
+        def __str__(self):
+            return self.email
 
-User._meta.get_field('email')._unique = True
-User._meta.get_field('username')._unique = False
+    User._meta.get_field('email')._unique = True
+    User._meta.get_field('username')._unique = False
