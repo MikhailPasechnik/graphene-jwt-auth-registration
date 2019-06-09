@@ -23,7 +23,7 @@ Quickstart
 
 Install Graphene JWT Auth::
 
-    pip install graphene-jwt-auth
+..  pip install graphene-jwt-auth
 
 Add it to your `INSTALLED_APPS`:
 
