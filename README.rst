@@ -21,7 +21,7 @@ Documentation
 Quickstart
 ----------
 
-Install Graphene JWT Auth::
+Install Graphene JWT Auth
 
 ..  pip install graphene-jwt-auth
 
