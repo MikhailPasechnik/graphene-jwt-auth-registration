@@ -16,7 +16,7 @@ Authentication using graphene and JWT
 Documentation
 -------------
 
-The full documentation is at https://graphene-jwt-auth.readthedocs.io.
+.. The full documentation is at https://graphene-jwt-auth.readthedocs.io.
 
 Quickstart
 ----------
