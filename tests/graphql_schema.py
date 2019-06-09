@@ -1,6 +1,6 @@
 import graphene
 
-from apps.account.mutations import (
+from gjwt_auth.mutations import (
     Activate,
     DeleteAccount,
     Login,
@@ -9,7 +9,7 @@ from apps.account.mutations import (
     ResetPassword,
     ResetPasswordConfirm,
     )
-from apps.account.schema import User, Viewer
+from gjwt_auth.schema import User, Viewer
 
 
 class RootQuery(graphene.ObjectType):

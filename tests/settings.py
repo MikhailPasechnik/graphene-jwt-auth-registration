@@ -1,6 +1,6 @@
 # -*- coding: utf-8
 from __future__ import unicode_literals, absolute_import
-
+import os
 import django
 
 DEBUG = True
@@ -41,7 +41,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
@@ -69,7 +68,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 GRAPHENE = {
-    'SCHEMA': 'graphql_schema'
+    'SCHEMA': 'tests.graphql_schema.schema'
 }
 
 DJOSER = {
