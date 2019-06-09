@@ -57,7 +57,6 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-      'Django>==2.0',
       'djangorestframework-filters>==1.0.0.dev0',
       'djangorestframework-jwt>==1.11.0',
       'djoser>=1.7.0',
