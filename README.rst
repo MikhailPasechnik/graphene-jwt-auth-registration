@@ -29,22 +29,110 @@ Add it to your `INSTALLED_APPS`:
 
 .. code-block:: python
 
-    INSTALLED_APPS = (
+    INSTALLED_APPS = [
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sites",
+        
         ...
-        'gjwt_auth.apps.GjwtAuthConfig',
+
+        "rest_framework",
+        "rest_framework_jwt",
+        "djoser",
+        "graphene_django",
+
+        "gjwt_auth",
+    ]
+
+Set AUTH_USER_MODEL to:
+
+    AUTH_USER_MODEL = "gjwt_auth.User"
+
+Add the JWTAuthenticationMiddleware:
+
+    MIDDLEWARE = [
         ...
-    )
+        
+        'gjwt_auth.middleware.JWTAuthenticationMiddleware',
+    ]
+
+Create graphene schema in `yourproject/schema.py`: 
+
+    import graphene
+
+    from gjwt_auth.mutations import (
+        Activate,
+        DeleteAccount,
+        Login,
+        RefreshToken,
+        Register,
+        ResetPassword,
+        ResetPasswordConfirm,
+        )
+
+    from gjwt_auth.schema import User, Viewer
+
+
+    class RootQuery(graphene.ObjectType):
+        viewer = graphene.Field(Viewer)
+
+        def resolve_viewer(self, info, **kwargs):
+            if info.context.user.is_authenticated:
+                return info.context.user
+            return None
+
+
+    class Mutation(graphene.ObjectType):
+        activate = Activate.Field()
+        login = Login.Field()
+        register = Register.Field()
+        deleteAccount = DeleteAccount.Field()
+        refreshToken = RefreshToken.Field()
+        resetPassword = ResetPassword.Field()
+        resetPasswordConfirm = ResetPasswordConfirm.Field()
+
+
+    schema = graphene.Schema(query=RootQuery, mutation=Mutation)
+
+
+
+Set the graphene schema:
+
+    GRAPHENE = {
+        'SCHEMA': 'yourproject.schema.schema'
+    }
+
+Set djoser setttings:
+
+    DJOSER = {
+        'DOMAIN': os.environ.get('DJANGO_DJOSER_DOMAIN', 'localhost:3000'),
+        'SITE_NAME': os.environ.get('DJANGO_DJOSER_SITE_NAME', 'my site'),
+        'PASSWORD_RESET_CONFIRM_URL': '?action=set-new-password&uid={uid}&token={token}',
+        'ACTIVATION_URL': 'activate?uid={uid}&token={token}',
+        'SEND_ACTIVATION_EMAIL': True,
+    }
+
+Set jwt auth settings:
+
+    JWT_AUTH = {
+        'JWT_ALLOW_REFRESH': True,
+    }
 
 Add Graphene JWT Auth's URL patterns:
 
 .. code-block:: python
 
-    from gjwt_auth import urls as gjwt_auth_urls
 
+    from django.conf.urls import url
+    from django.views.decorators.csrf import csrf_exempt
+
+    from graphene_django.views import GraphQLView
+    
+    ...
 
     urlpatterns = [
         ...
-        url(r'^', include(gjwt_auth_urls)),
+        url(r'^graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
         ...
     ]
 
