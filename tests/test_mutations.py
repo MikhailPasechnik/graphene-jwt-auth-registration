@@ -169,7 +169,7 @@ class TestGjwt_auth_mutations(Gjwt_authTestCase):
         mutation {
             login(
                 email: "eins@zwei.de",
-                password: "123"
+                password: "123wrong"
             ) {
                 success
                 errors
