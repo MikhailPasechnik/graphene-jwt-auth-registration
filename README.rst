@@ -5,10 +5,10 @@ Graphene JWT Auth
 .. image:: https://badge.fury.io/py/graphene-jwt-auth.svg
     :target: https://badge.fury.io/py/graphene-jwt-auth
 
-.. image:: https://travis-ci.org/fivethreeo/graphene-jwt-auth.svg?branch=master
+.. image:: https://travis-ci.org/fivethreeo/graphene-jwt-auth.svg?branch=graphene-2
     :target: https://travis-ci.org/fivethreeo/graphene-jwt-auth
 
-.. image:: https://codecov.io/gh/fivethreeo/graphene-jwt-auth/branch/master/graph/badge.svg
+.. image:: https://codecov.io/gh/fivethreeo/graphene-jwt-auth/branch/graphene-2/graph/badge.svg
     :target: https://codecov.io/gh/fivethreeo/graphene-jwt-auth
 
 Authentication using graphene and JWT 
