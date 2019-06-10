@@ -45,13 +45,13 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
-    name='graphene-jwt-auth',
+    name='graphene-jwt-auth-registration',
     version=version,
-    description="""Authentication using graphene and JWT """,
+    description="""Authentication and registration with django graphene and JWT """,
     long_description=readme + '\n\n' + history,
     author='Øyvind Saltvik',
     author_email='oyvind.saltvik@gmail.com',
-    url='https://github.com/fivethreeo/graphene-jwt-auth',
+    url='https://github.com/fivethreeo/graphene-jwt-auth-registration',
     packages=[
         'gjwt_auth',
     ],
@@ -64,7 +64,7 @@ setup(
     ],
     license="MIT",
     zip_safe=False,
-    keywords='graphene-jwt-auth',
+    keywords='graphene-jwt-auth-registration',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django :: 2.0',
