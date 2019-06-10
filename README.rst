@@ -1,17 +1,17 @@
-=============================
-Graphene JWT Auth
-=============================
+==============================
+Graphene JWT Auth Registration
+==============================
 
-.. image:: https://badge.fury.io/py/graphene-jwt-auth.svg
-    :target: https://badge.fury.io/py/graphene-jwt-auth
+.. image:: https://badge.fury.io/py/graphene-jwt-auth-registration.svg
+    :target: https://badge.fury.io/py/graphene-jwt-auth-registration
 
-.. image:: https://travis-ci.org/fivethreeo/graphene-jwt-auth.svg?branch=graphene-2
-    :target: https://travis-ci.org/fivethreeo/graphene-jwt-auth
+.. image:: https://travis-ci.org/fivethreeo/graphene-jwt-auth-registration.svg?branch=master
+    :target: https://travis-ci.org/fivethreeo/graphene-jwt-auth-registration
 
-.. image:: https://codecov.io/gh/fivethreeo/graphene-jwt-auth/branch/graphene-2/graph/badge.svg
-    :target: https://codecov.io/gh/fivethreeo/graphene-jwt-auth
+.. image:: https://codecov.io/gh/fivethreeo/graphene-jwt-auth-registration/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/fivethreeo/graphene-jwt-auth-registration
 
-Authentication using graphene and JWT 
+Authentication and registration using graphene and JWT 
 
 Documentation
 -------------
@@ -21,9 +21,9 @@ Documentation
 Quickstart
 ----------
 
-Install Graphene JWT Auth
+Install Graphene JWT Auth Registration::
 
-..  pip install graphene-jwt-auth
+    pip install graphene-jwt-auth-registration
 
 Add it to your `INSTALLED_APPS`:
 
