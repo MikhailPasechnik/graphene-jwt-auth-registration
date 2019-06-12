@@ -1,9 +1,9 @@
+from django.contrib.auth import get_user_model
 from graphene import relay, ObjectType, Field
 from graphene_django.types import DjangoObjectType
 from graphene_django.filter.fields import DjangoFilterConnectionField
 
-from .models import User as UserModel
-
+UserModel = get_user_model()
 
 class User(DjangoObjectType):
     """

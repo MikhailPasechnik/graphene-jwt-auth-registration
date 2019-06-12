@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 
 from djoser.conf import settings as djoser_settings
@@ -11,11 +12,11 @@ from rest_framework_jwt.serializers import (
     RefreshJSONWebTokenSerializer
     )
 
-from .models import User as UserModel
 from .schema import User
 from .serializers import PasswordResetConfirmRetypeSerializer
 from .utils import send_activation_email, send_password_reset_email
 
+UserModel = get_user_model()
 
 class Register(graphene.Mutation):
     """
