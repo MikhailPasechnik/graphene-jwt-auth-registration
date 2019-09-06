@@ -3,8 +3,6 @@ import graphene
 from gjwt_auth.mutations import (
     Activate,
     DeleteAccount,
-    Login,
-    RefreshToken,
     Register,
     ResetPassword,
     ResetPasswordConfirm,
@@ -23,10 +21,8 @@ class RootQuery(graphene.ObjectType):
 
 class Mutation(graphene.ObjectType):
     activate = Activate.Field()
-    login = Login.Field()
     register = Register.Field()
     deleteAccount = DeleteAccount.Field()
-    refreshToken = RefreshToken.Field()
     resetPassword = ResetPassword.Field()
     resetPasswordConfirm = ResetPasswordConfirm.Field()
 

@@ -5,14 +5,8 @@ from djoser.conf import settings as djoser_settings
 from djoser.utils import decode_uid
 
 import graphene
-from graphene import relay
 
-from rest_framework_jwt.serializers import (
-    JSONWebTokenSerializer,
-    RefreshJSONWebTokenSerializer
-    )
 
-from .schema import User
 from .serializers import PasswordResetConfirmRetypeSerializer
 from .utils import send_activation_email, send_password_reset_email
 
@@ -77,61 +71,6 @@ class Activate(graphene.Mutation):
             return Activate(success=False, errors=['unknown user'])
 
 
-class Login(graphene.Mutation):
-    """
-    Mutation to login a user
-    """
-    class Arguments:
-        email = graphene.String(required=True)
-        password = graphene.String(required=True)
-
-    success = graphene.Boolean()
-    errors = graphene.List(graphene.String)
-    token = graphene.String()
-    user = graphene.Field(User)
-
-    def mutate(self, info, email, password):
-        user = {'email': email, 'password': password}
-        serializer = JSONWebTokenSerializer(data=user)
-        if serializer.is_valid():
-            token = serializer.object['token']
-            user = serializer.object['user']
-            return Login(success=True, user=user, token=token, errors=None)
-        else:
-            return Login(
-                success=False,
-                token=None,
-                errors=['email', 'Unable to login with provided credentials.']
-                )
-
-
-class RefreshToken(graphene.Mutation):
-    """
-    Mutation to reauthenticate a user
-    """
-    class Arguments:
-        token = graphene.String(required=True)
-
-    success = graphene.Boolean()
-    errors = graphene.List(graphene.String)
-    token = graphene.String()
-
-    def mutate(self, info, token):
-        serializer = RefreshJSONWebTokenSerializer(data={'token': token})
-        if serializer.is_valid():
-            return RefreshToken(
-                success=True,
-                token=serializer.object['token'],
-                errors=None
-                )
-        else:
-            return RefreshToken(
-                success=False,
-                token=None,
-                errors=['email', 'Unable to login with provided credentials.']
-                )
-
-
 class ResetPassword(graphene.Mutation):
     """
     Mutation for requesting a password reset email
@@ -144,7 +83,7 @@ class ResetPassword(graphene.Mutation):
 
     def mutate(self, info, email):
         try:
-            user = User.objects.get(email=email)
+            user = UserModel.objects.get(email=email)
             send_password_reset_email(info.context, user)
             return ResetPassword(success=True)
         except Exception:

@@ -25,8 +25,6 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sites",
     
-    "rest_framework",
-    "rest_framework_jwt",
     "djoser",
     "graphene_django",
 
@@ -44,9 +42,12 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
-    'gjwt_auth.middleware.JWTAuthenticationMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 if django.VERSION >= (1, 10):
     MIDDLEWARE = MIDDLEWARE_CLASSES
@@ -68,19 +69,19 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 GRAPHENE = {
-    'SCHEMA': 'tests.graphql_schema.schema'
+    'SCHEMA': 'tests.graphql_schema.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
 }
 
+DOMAIN = os.environ.get('DJANGO_DJOSER_DOMAIN', 'localhost:3000')
+SITE_NAME = os.environ.get('DJANGO_DJOSER_SITE_NAME', 'my site')
+
 DJOSER = {
-    'DOMAIN': os.environ.get('DJANGO_DJOSER_DOMAIN', 'localhost:3000'),
-    'SITE_NAME': os.environ.get('DJANGO_DJOSER_SITE_NAME', 'my site'),
     'PASSWORD_RESET_CONFIRM_URL': '?action=set-new-password&uid={uid}&token={token}',
     'ACTIVATION_URL': 'activate?uid={uid}&token={token}',
     'SEND_ACTIVATION_EMAIL': True,
-}
-
-JWT_AUTH = {
-    'JWT_ALLOW_REFRESH': True,
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

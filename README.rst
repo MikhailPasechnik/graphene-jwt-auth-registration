@@ -36,8 +36,6 @@ Add it to your `INSTALLED_APPS`:
         
         ...
 
-        "rest_framework",
-        "rest_framework_jwt",
         "djoser",
         "graphene_django",
 
@@ -50,27 +48,34 @@ Set AUTH_USER_MODEL:
 
     AUTH_USER_MODEL = "gjwt_auth.User"
 
-Add the JWTAuthenticationMiddleware:
+Add JSONWebTokenBackend backend to your AUTHENTICATION_BACKENDS:
+
+    AUTHENTICATION_BACKENDS = [
+        'graphql_jwt.backends.JSONWebTokenBackend',
+        'django.contrib.auth.backends.ModelBackend',
+    ]
+
+Add the JSONWebTokenMiddleware:
 
 .. code-block:: python
 
-    MIDDLEWARE = [
-        ...
-        
-        'gjwt_auth.middleware.JWTAuthenticationMiddleware',
-    ]
+    GRAPHENE = {
+        'SCHEMA': 'yourproject.schema.schema',
+        'MIDDLEWARE': [
+            'graphql_jwt.middleware.JSONWebTokenMiddleware',
+        ],
+    }
 
 Create graphene schema in `yourproject/schema.py`: 
 
 .. code-block:: python
 
     import graphene
+    import graphql_jwt
 
     from gjwt_auth.mutations import (
         Activate,
         DeleteAccount,
-        Login,
-        RefreshToken,
         Register,
         ResetPassword,
         ResetPasswordConfirm,
@@ -90,45 +95,35 @@ Create graphene schema in `yourproject/schema.py`:
 
     class Mutation(graphene.ObjectType):
         activate = Activate.Field()
-        login = Login.Field()
         register = Register.Field()
         deleteAccount = DeleteAccount.Field()
-        refreshToken = RefreshToken.Field()
         resetPassword = ResetPassword.Field()
         resetPasswordConfirm = ResetPasswordConfirm.Field()
 
+        token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+        verify_token = graphql_jwt.Verify.Field()
+        refresh_token = graphql_jwt.Refresh.Field()
 
     schema = graphene.Schema(query=RootQuery, mutation=Mutation)
 
-Set the graphene schema:
-
-.. code-block:: python
-
-    GRAPHENE = {
-        'SCHEMA': 'yourproject.schema.schema'
-    }
 
 Set djoser setttings:
 
 .. code-block:: python
-
+    
+    DOMAIN = os.environ.get('DJANGO_DJOSER_DOMAIN', 'localhost:3000')
+    SITE_NAME = os.environ.get('DJANGO_DJOSER_SITE_NAME', 'my site')
+    
     DJOSER = {
-        'DOMAIN': os.environ.get('DJANGO_DJOSER_DOMAIN', 'localhost:3000'),
-        'SITE_NAME': os.environ.get('DJANGO_DJOSER_SITE_NAME', 'my site'),
+        
         'PASSWORD_RESET_CONFIRM_URL': '?action=set-new-password&uid={uid}&token={token}',
         'ACTIVATION_URL': 'activate?uid={uid}&token={token}',
         'SEND_ACTIVATION_EMAIL': True,
     }
 
-Set jwt auth settings:
-
-.. code-block:: python
-
-    JWT_AUTH = {
-        'JWT_ALLOW_REFRESH': True,
     }
 
-Add Graphene JWT Auth's URL patterns:
+Add Graphenes URL patterns:
 
 .. code-block:: python
 
