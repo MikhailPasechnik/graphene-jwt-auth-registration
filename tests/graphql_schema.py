@@ -7,16 +7,7 @@ from gjwt_auth.mutations import (
     ResetPassword,
     ResetPasswordConfirm,
     )
-from gjwt_auth.schema import User, Viewer
 
-
-class RootQuery(graphene.ObjectType):
-    viewer = graphene.Field(Viewer)
-
-    def resolve_viewer(self, info, **kwargs):
-        if info.context.user.is_authenticated:
-            return info.context.user
-        return None
 
 
 class Mutation(graphene.ObjectType):
@@ -27,4 +18,4 @@ class Mutation(graphene.ObjectType):
     resetPasswordConfirm = ResetPasswordConfirm.Field()
 
 
-schema = graphene.Schema(query=RootQuery, mutation=Mutation)
+schema = graphene.Schema(mutation=Mutation)
