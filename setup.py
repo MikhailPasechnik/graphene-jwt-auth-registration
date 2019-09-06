@@ -57,6 +57,7 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
+      'djangorestframework-jwt>==1.11.0',
       'djoser>=1.7.0',
       'graphene-django>==2.3.0',
       'django-graphql-jwt'
