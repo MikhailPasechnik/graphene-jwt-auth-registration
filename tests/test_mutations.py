@@ -23,7 +23,7 @@ class TestGjwt_auth_mutations(Gjwt_authTestCase):
         query = """
         mutation {
           register(
-                email: "affe@giraffe.de",
+                email: "laffe@giraffe.de",
                 password: "123",
                 passwordRepeat: "123"
             )
