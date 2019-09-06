@@ -50,6 +50,8 @@ Set AUTH_USER_MODEL:
 
 Add JSONWebTokenBackend backend to your AUTHENTICATION_BACKENDS:
 
+.. code-block:: python
+
     AUTHENTICATION_BACKENDS = [
         'graphql_jwt.backends.JSONWebTokenBackend',
         'django.contrib.auth.backends.ModelBackend',
