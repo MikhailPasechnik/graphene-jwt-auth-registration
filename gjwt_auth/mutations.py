@@ -37,7 +37,8 @@ class Register(graphene.Mutation):
                     send_activation_email(user, info.context)
                 return Register(success=bool(user.id))
             # TODO: specify exception
-            except Exception:
+            except (Exception, e):
+                raise e
                 errors = ["email", "Email already registered."]
                 return Register(success=False, errors=errors)
         errors = ["password", "Passwords don't match."]
