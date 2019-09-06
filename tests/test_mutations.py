@@ -41,7 +41,7 @@ class TestGjwt_auth_mutations(Gjwt_authTestCase):
                     }
                 }
         result = schema.execute(query, context_value=request)
-        print(result)
+        print(result.data)
         assert not result.errors
         assert result.data == expectation
 
