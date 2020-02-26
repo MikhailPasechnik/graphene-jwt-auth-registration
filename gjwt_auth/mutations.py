@@ -35,7 +35,7 @@ class Register(graphene.Mutation):
                 user.save()
                 if djoser_settings.SEND_ACTIVATION_EMAIL:
                     send_activation_email(user, info.context)
-                return Register(success=bool(user.id))
+                return Register(success=bool(user.pk))
             # TODO: specify exception
             except Exception:
                 errors = ["email", "Email already registered."]
