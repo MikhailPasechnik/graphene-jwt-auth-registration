@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
+import django.db.utils
 
 from djoser.conf import settings as djoser_settings
 from djoser.utils import decode_uid
@@ -26,6 +27,7 @@ class Register(graphene.Mutation):
 
     def mutate(self, info, email, password, password_repeat):
         if password == password_repeat:
+            user = None
             try:
                 user = UserModel.objects.create(
                     email=email,
@@ -36,9 +38,13 @@ class Register(graphene.Mutation):
                 if djoser_settings.SEND_ACTIVATION_EMAIL:
                     send_activation_email(user, info.context)
                 return Register(success=bool(user.pk))
-            # TODO: specify exception
-            except Exception:
+            except django.db.utils.IntegrityError:
                 errors = ["email", "Email already registered."]
+                return Register(success=False, errors=errors)
+            except Exception as e:
+                if user and user.pk:
+                    user.delete()
+                errors = ["unknown", str(e)]
                 return Register(success=False, errors=errors)
         errors = ["password", "Passwords don't match."]
         return Register(success=False, errors=errors)
